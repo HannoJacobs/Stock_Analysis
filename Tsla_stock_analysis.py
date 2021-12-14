@@ -1,18 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.fft import fft, ifft
-
 tesla_file = open("tesla_share_price.txt", "r")
 tesla = []
 t = []
-
 counter = 0
 for i in tesla_file:
     t.append(counter)
     counter += 1
     tesla.append(np.float(i[:-1]))
-
 tesla_file.close()
+################## end setup ##################
+
 
 
 ################## helper methods ##################
@@ -54,7 +53,20 @@ plt.xlabel('Days')
 
 trendline = make_trendline(t, tesla)
 plt.plot(t, trendline)
-
-
 plt.show()
+###
+
+
+N = 1000
+# T = 1/800
+yf = fft(tesla)
+xf = fftfreq(N, T)[:N//2]
+
+plt.plot()
+
+
+
+# plt.show()
+
+
 
