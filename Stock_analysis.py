@@ -44,11 +44,18 @@ def make_trendline_data_order_x(trendline, order = 5):
     return y
 
 def moving_average(days = 10):
-    global tesla, btc
-    
+    global tesla, btc, t
+    moving_average = []
 
 
     return moving_average
+
+def fft_method():
+    global tesla, btc, t
+    fft_array = []
+
+
+    return fft_array
 
 ################## end helper methods ##################
 
