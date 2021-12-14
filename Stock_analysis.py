@@ -20,7 +20,7 @@ def moving_average(days = 10):
     
 
 
-    return
+    return moving_average
 
 def make_trendline_data_order_1(trendline):
     m = trendline[0]
@@ -33,15 +33,19 @@ def make_trendline_data_order_1(trendline):
 
     return y
 
-def make_trendline_data_order_2(trendline):
-    x2 = trendline[0]
-    x1 = trendline[1]
-    x0 = trendline[2]
-    y = []
+def make_trendline_data_order_x(trendline, order = 5):
+    # global tesla, btc, t
     
-    for i in range(len(t)):
-        # y = x0*i^2 + x1*i + x0
-        y.append(x0*(i**2) + x1*i + x0)
+    # trendline1_x = np.polyfit(t, tesla, order)
+
+    # x2 = trendline[0]
+    # x1 = trendline[1]
+    # x0 = trendline[2]
+
+    # y = []
+    # for i in range(len(t)):
+    #     # y = x0*i^2 + x1*i + x0
+    #     y.append(x0*(i**2) + x1*i + x0)
 
     return y
 ################## end helper methods ##################
@@ -59,9 +63,8 @@ trendline1_1 = np.polyfit(t, tesla, 1)
 trend_line_array_1_1 = make_trendline_data_order_1(trendline1_1)
 ax[0].plot(t, trend_line_array_1_1)
 
-# trendline1_2 = np.polyfit(t, tesla, 2)
-# trend_line_array_1_2 = make_trendline_data_order_2(trendline1_2)
-# ax[0].plot(t, trend_line_array_1_2)
+# trend_line_array_1_x = make_trendline_data_order_x(trendline1_x, 5)
+# ax[0].plot(t, trend_line_array_1_x)
 
 # ##################
 ax[1].set_title('Bitcoin')
@@ -74,7 +77,7 @@ trend_line_array_2_1 = make_trendline_data_order_1(trendline2_1)
 ax[1].plot(t, trend_line_array_2_1)
 
 # trendline2 = np.polyfit(t, btc, 2)
-# trend_line_array_2 = make_trendline_data_order_1(trendline2)
+# trend_line_array_2 = make_trendline_data_order_x(trendline2)
 # ax[1].plot(t, trend_line_array_2)
 
 
