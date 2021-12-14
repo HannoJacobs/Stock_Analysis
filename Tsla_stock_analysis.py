@@ -1,24 +1,23 @@
 import matplotlib.pyplot as plt
 import numpy as np
-# from scipy.fft import ff, ifft
-
-t = []
-tesla = []
+from scipy.fft import fft, ifft
 
 tesla_file = open("tesla_share_price.txt", "r")
+tesla = []
+t = []
 
 counter = 0
 for i in tesla_file:
     t.append(counter)
     counter += 1
-    tesla.append(i)
-
+    tesla.append(np.float(i[:-1]))
 
 tesla_file.close()
 
 
 ################## helper methods ##################
-def make_trendline_data_order_1(trendline):
+def make_trendline(time, stock):
+    trendline = np.polyfit(time, stock, 1)
     m = trendline[0]
     c = trendline[1]
     y = []
@@ -29,33 +28,16 @@ def make_trendline_data_order_1(trendline):
 
     return y
 
-def make_trendline_data_order_x(trendline, order = 5):
-    global tesla, btc, t
-    y = []
-    
-    # trendline1_x = np.polyfit(t, tesla, order)
-
-    # x2 = trendline[0]
-    # x1 = trendline[1]
-    # x0 = trendline[2]
-
-    # y = []
-    # for i in range(len(t)):
-    #     # y = x0*i^2 + x1*i + x0
-    #     y.append(x0*(i**2) + x1*i + x0)
-
-    return y
-
 
 def fft_method():
-    global tesla, btc, t
+    global tesla, t
     fft_array = []
 
 
     return fft_array
 
 def LPF_filter():
-    global tesla, btc, t
+    global tesla, t
     LPF_array = []
 
 
@@ -65,18 +47,14 @@ def LPF_filter():
 
 
 ################## plots ##################
-fig, ax = plt.subplots(2, sharex=True)
-##################
-plt.set_title('TSLA')
-plt.set_ylabel('USD ($)')
 plt.plot(t, tesla)
+plt.title('TSLA')
+plt.ylabel('Stock Price (USD)')
+plt.xlabel('Days')
 
-trendline1_1 = np.polyfit(t, tesla, 1)
-trend_line_array_1_1 = make_trendline_data_order_1(trendline1_1)
-plt.plot(t, trend_line_array_1_1)
+trendline = make_trendline(t, tesla)
+plt.plot(t, trendline)
 
-# trend_line_array_1_x = make_trendline_data_order_x(trendline1_x, 5)
-# ax[0].plot(t, trend_line_array_1_x)
 
 plt.show()
 
