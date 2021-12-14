@@ -34,7 +34,8 @@ def make_trendline_data_order_1(trendline):
     return y
 
 def make_trendline_data_order_x(trendline, order = 5):
-    # global tesla, btc, t
+    global tesla, btc, t
+    y = []
     
     # trendline1_x = np.polyfit(t, tesla, order)
 
