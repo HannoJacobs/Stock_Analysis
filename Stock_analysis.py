@@ -57,6 +57,13 @@ def fft_method():
 
     return fft_array
 
+def LPF_filter():
+    global tesla, btc, t
+    LPF_array = []
+
+
+    return LPF_array
+
 ################## end helper methods ##################
 
 
