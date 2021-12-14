@@ -1,23 +1,52 @@
 import yfinance as yf
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+
+
+from datetime import datetime
+start = '2020-01-01'
+end = datetime.today().strftime('%Y-%m-%d') # works
 
 # tesla = yf.Ticker("TSLA")
 # dictionary = tesla.info
 # price = dictionary['currentPrice']
 # print ("\n", price, "\n")
 
-from datetime import datetime
-now = datetime.today().strftime('%Y-%m-%d')
-print("date now = ", now)
-tesla_price_chart = yf.download('tsla','2020-01-01', now)
-bitcoin_price_chart = yf.download('BTC-USD','2020-01-01', now)
 
+# def plot_the_data():
+
+
+
+#     return
+
+
+
+tesla_price_chart = yf.download('tsla','2020-01-01', end)
+bitcoin_price_chart = yf.download('BTC-USD','2020-01-01', end)
+
+
+####################### plots ###################################
 fig, ax = plt.subplots(2, sharex=True)
 ax[0].set_title('TSLA')
-ax[0].plot(tesla_price_chart['Adj Close'])
-ax[1].set_title('Bitcoin')
-ax[1].plot(bitcoin_price_chart['Adj Close'])
+ax[0].set_ylabel('USD ($)')
+y = tesla_price_chart['Adj Close']
 
+# trendline1 = np.polyfit(int_date, y, 1)
+
+
+
+
+ax[0].plot(y)
+################################################################
+################################################################
+ax[1].set_title('Bitcoin')
+ax[1].set_ylabel('USD ($)')
+
+
+y = bitcoin_price_chart['Adj Close']
+ax[1].plot(y)
+################################################################
 
 
 plt.show()
