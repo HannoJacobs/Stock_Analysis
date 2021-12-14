@@ -4,8 +4,6 @@ import numpy as np
 
 tesla_price_chart = yf.download('tsla', period="2y")
 btc_price_chart = yf.download('BTC-USD', period="2y")
-# temp1 = tesla_price_chart['Adj Close']
-# temp2 = btc_price_chart['Adj Close']
 t = []
 tesla = []
 btc = []
@@ -16,6 +14,7 @@ for i in range(len(tesla_price_chart)):
     btc.append(btc_price_chart['Adj Close'][i])
 
 
+################## helper methods ##################
 def moving_average(days = 10):
     global tesla, btc
     
@@ -45,12 +44,7 @@ def make_trendline_data_order_2(trendline):
         y.append(x0*(i**2) + x1*i + x0)
 
     return y
-
-
-
-
-
-
+################## end helper methods ##################
 
 
 
@@ -65,21 +59,22 @@ trendline1_1 = np.polyfit(t, tesla, 1)
 trend_line_array_1_1 = make_trendline_data_order_1(trendline1_1)
 ax[0].plot(t, trend_line_array_1_1)
 
-trendline1_2 = np.polyfit(t, tesla, 2)
-trend_line_array_1_2 = make_trendline_data_order_2(trendline1_2)
+# trendline1_2 = np.polyfit(t, tesla, 2)
+# trend_line_array_1_2 = make_trendline_data_order_2(trendline1_2)
 # ax[0].plot(t, trend_line_array_1_2)
 
 # ##################
-# ax[1].set_title('Bitcoin')
-# ax[1].set_ylabel('USD ($)')
-# ax[1].set_xlabel('Days')
-# ax[1].plot(t, btc)
-# trendline2 = np.polyfit(t, btc, 1)
-# trend_line_array_2 = make_trendline_data_order_1(trendline2)
+ax[1].set_title('Bitcoin')
+ax[1].set_ylabel('USD ($)')
+ax[1].set_xlabel('Days')
+ax[1].plot(t, btc)
+
+trendline2_1 = np.polyfit(t, btc, 1)
+trend_line_array_2_1 = make_trendline_data_order_1(trendline2_1)
+ax[1].plot(t, trend_line_array_2_1)
 
 # trendline2 = np.polyfit(t, btc, 2)
 # trend_line_array_2 = make_trendline_data_order_1(trendline2)
-
 # ax[1].plot(t, trend_line_array_2)
 
 
