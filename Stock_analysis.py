@@ -15,13 +15,6 @@ for i in range(len(tesla_price_chart)):
 
 
 ################## helper methods ##################
-def moving_average(days = 10):
-    global tesla, btc
-    
-
-
-    return moving_average
-
 def make_trendline_data_order_1(trendline):
     m = trendline[0]
     c = trendline[1]
@@ -49,6 +42,14 @@ def make_trendline_data_order_x(trendline, order = 5):
     #     y.append(x0*(i**2) + x1*i + x0)
 
     return y
+
+def moving_average(days = 10):
+    global tesla, btc
+    
+
+
+    return moving_average
+
 ################## end helper methods ##################
 
 
