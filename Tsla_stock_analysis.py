@@ -1,14 +1,20 @@
-import yfinance as yf
 import matplotlib.pyplot as plt
 import numpy as np
+# from scipy.fft import ff, ifft
 
-tesla_price_chart = yf.download('tsla', period="2y")
 t = []
 tesla = []
 
-for i in range(len(tesla_price_chart)):
-    t.append(i)
-    tesla.append(tesla_price_chart['Adj Close'][i])
+tesla_file = open("tesla_share_price.txt", "r")
+
+counter = 0
+for i in tesla_file:
+    t.append(counter)
+    counter += 1
+    tesla.append(i)
+
+
+tesla_file.close()
 
 
 ################## helper methods ##################
@@ -40,12 +46,6 @@ def make_trendline_data_order_x(trendline, order = 5):
 
     return y
 
-def moving_average(days = 10):
-    global tesla, btc, t
-    moving_average = []
-
-
-    return moving_average
 
 def fft_method():
     global tesla, btc, t
@@ -62,7 +62,6 @@ def LPF_filter():
     return LPF_array
 
 ################## end helper methods ##################
-
 
 
 ################## plots ##################
