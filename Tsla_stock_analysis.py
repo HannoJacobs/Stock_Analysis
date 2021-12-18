@@ -42,6 +42,10 @@ def LPF_filter():
 
     return LPF_array
 
+def correlation():
+    # crorelate using np.corrcoeff(np_array1, np_array2)
+    return
+
 ################## end helper methods ##################
 
 
