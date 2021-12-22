@@ -46,6 +46,10 @@ def correlation():
     # crorelate using np.corrcoef(np_array1, np_array2)
     return
 
+def support():
+    # add code that identifies and marks out supports
+    return
+
 ################## end helper methods ##################
 
 
