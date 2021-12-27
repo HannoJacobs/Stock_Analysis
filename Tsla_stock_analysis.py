@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy
 from scipy import signal
 import math
 from scipy.fft import fft, ifft
-
 
 
 tesla_file = open("tesla_share_price.txt", "r")
@@ -32,7 +32,7 @@ def make_trendline(time, stock):
 
     return y
 
-def LPF_filter():
+def G4G_filter():
     global tesla, t
     LPF_array = []
 
@@ -97,6 +97,38 @@ def LPF_filter():
 
     return LPF_array
 
+def kite_LPF():
+    kite_LPF_array = []
+    
+    order = 1
+    multiplier = 10
+    # sampling_freq = 2*counter
+    sampling_freq = multiplier * counter
+    cutoff_freq = sampling_freq/60
+    # sampling_duration = 5
+    # number_of_samples = sampling_freq * sampling_duration
+    offset = 0
+    sampling_duration = counter
+    number_of_samples = counter
+
+
+    time = np.linspace(0, sampling_duration, number_of_samples, endpoint=False)
+    # signal = np.sin(2*np.pi*time) + 0.5*np.cos(6*2*np.pi*time) + 1.5*np.sin(9*2*np.pi*time)
+    signal = tesla
+
+    normalized_cutoff_freq = 2 * cutoff_freq / sampling_freq
+    numerator_coeffs, denominator_coeffs = scipy.signal.butter(order, normalized_cutoff_freq)
+
+    # filtered_signal = scipy.signal.lfilter(numerator_coeffs, denominator_coeffs, signal)
+    filtered_signal = scipy.signal.lfilter(numerator_coeffs, denominator_coeffs, signal)
+
+    plt.plot(time, signal, 'b-', label='signal')
+    plt.plot((time - offset), filtered_signal, 'g-', linewidth=2, label='filtered signal')
+    plt.legend()
+
+
+    
+    return kite_LPF_array
 
 def fft_method():
     global tesla, t
@@ -128,7 +160,9 @@ def support():
 # plt.show()
 # ###
 
-LPF_filter()
+# G4G_filter()
+kite_LPF()
+
 
 # N = 1000
 # # T = 1/800
@@ -139,7 +173,7 @@ LPF_filter()
 
 
 
-# plt.show()
+plt.show()
 
 
 
