@@ -43,7 +43,7 @@ def LPF_filter():
     return LPF_array
 
 def correlation():
-    # crorelate using np.corrcoef(np_array1, np_array2)
+    # correlate using np.corrcoef(np_array1, np_array2)
     return
 
 def support():
@@ -65,12 +65,12 @@ plt.show()
 ###
 
 
-N = 1000
-# T = 1/800
-yf = fft(tesla)
-xf = fftfreq(N, T)[:N//2]
+# N = 1000
+# # T = 1/800
+# yf = fft(tesla)
+# xf = fftfreq(N, T)[:N//2]
 
-plt.plot()
+# plt.plot()
 
 
 
