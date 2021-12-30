@@ -30,6 +30,14 @@ def make_trendline(time, stock):
         # y = m*t + c
         y.append(m*i + c)
 
+    plt.plot(t, tesla)
+    plt.title('TSLA')
+    plt.ylabel('Stock Price (USD)')
+    plt.xlabel('Days')
+
+    # trendline = make_trendline(t, tesla)
+    plt.plot(t, y)
+
     return y
 
 def G4G_filter():
@@ -150,15 +158,7 @@ def support():
 
 
 ################## plots ##################
-# plt.plot(t, tesla)
-# plt.title('TSLA')
-# plt.ylabel('Stock Price (USD)')
-# plt.xlabel('Days')
-
-# trendline = make_trendline(t, tesla)
-# plt.plot(t, trendline)
-# plt.show()
-# ###
+trendline = make_trendline(t, tesla)
 
 # G4G_filter()
 kite_LPF()
