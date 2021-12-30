@@ -21,6 +21,7 @@ tesla_file.close()
 
 ################## helper methods ##################
 def make_trendline(time, stock):
+    global tesla, t, counter
     trendline = np.polyfit(time, stock, 1)
     m = trendline[0]
     c = trendline[1]
@@ -30,18 +31,18 @@ def make_trendline(time, stock):
         # y = m*t + c
         y.append(m*i + c)
 
-    plt.plot(t, tesla)
+    plt.plot(t, tesla, 'k', linewidth=3, label='Daily closing stock price')
     plt.title('TSLA')
     plt.ylabel('Stock Price (USD)')
     plt.xlabel('Days')
 
     # trendline = make_trendline(t, tesla)
-    plt.plot(t, y)
+    plt.plot(t, y, linewidth=0.5, label='First order linear trendline')
 
     return y
 
 def G4G_filter():
-    global tesla, t
+    global tesla, t, counter
     LPF_array = []
 
     f_sample = 40000 # sampling frequency
@@ -106,6 +107,7 @@ def G4G_filter():
     return LPF_array
 
 def kite_LPF():
+    global tesla, t, counter
     kite_LPF_array = []
     
     order = 1
@@ -130,16 +132,45 @@ def kite_LPF():
     # filtered_signal = scipy.signal.lfilter(numerator_coeffs, denominator_coeffs, signal)
     filtered_signal = scipy.signal.lfilter(numerator_coeffs, denominator_coeffs, signal)
 
-    plt.plot(time, signal, 'b-', label='signal')
-    plt.plot((time - offset), filtered_signal, 'g-', linewidth=2, label='filtered signal')
+    # plt.plot(time, signal, 'b-', label='current stock price')
+    plt.plot((time - offset), filtered_signal, 'g-', linewidth=2, label='LPF stock price')
     plt.legend()
 
 
     
     return kite_LPF_array
 
+def moving_average(gaps):
+    global tesla, t, counter
+    tesla_array = np.array(tesla)
+
+    avg_array = []
+    for i in range(gaps):#causal
+        causal = "causal"
+        avg_array.append(0)
+
+    for i in range(gaps, counter):
+        index1 = i-gaps
+        index2 = i
+
+        avg = ( np.sum(tesla_array[index1:index2]) )/gaps
+        avg_array.append(avg)
+    
+    # for i in range(gaps):#non-causal
+    #     causal = "non-causal"
+    #     avg_array.append(0)
+
+    text = "{num:d} point {txt} moving average"
+    plt.plot(t, avg_array, label=text.format(num = gaps, txt = causal))
+    plt.legend()
+
+
+    return
+
+
+
 def fft_method():
-    global tesla, t
+    global tesla, t, counter
     fft_array = []
 
 
@@ -147,10 +178,12 @@ def fft_method():
 
 
 def correlation():
+    global tesla, t, counter
     # correlate using np.corrcoef(np_array1, np_array2)
     return
 
 def support():
+    global tesla, t, counter
     # add code that identifies and marks out supports
     return
 
@@ -159,9 +192,11 @@ def support():
 
 ################## plots ##################
 trendline = make_trendline(t, tesla)
-
-# G4G_filter()
 kite_LPF()
+moving_average(10)
+moving_average(20)
+moving_average(30)
+moving_average(50)
 
 
 # N = 1000
