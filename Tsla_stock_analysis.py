@@ -200,20 +200,20 @@ def calc_moving_average(gaps):
 
 def fft_method(data):
     global tesla, t, counter
-    from scipy.fft import fft, fftfreq
-    fft_array = []
-    y = fft(data)
-    yf = np.abs(y)
-    N = counter
-    T = 1
-    xf = fftfreq(N, T)[:N//2]
-    plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]), label="FFT Method")
+    
+    freq = 1000
+    N_fft = counter*5
+    f_1 = np.arange(0, freq, freq/N_fft)
+    Y_r = np.fft.fft(data, N_fft)/N_fft # was like this
+    Y_shifted = np.fft.fftshift(Y_r)
+    Y_r_mag = 10*np.log10(np.abs(Y_shifted))
+    plt.plot(f_1,Y_r_mag)
+    plt.plot(f_1, Y_r_mag, label="FFT Method")
 
     plt.legend()
     plt.grid()
 
-
-    return fft_array
+    return Y_r_mag
 
 
 def correlation():
@@ -235,11 +235,10 @@ def support():
 # plot_moving_average(10)
 # plot_moving_average(20)
 # plot_moving_average(30)
-# # plot_moving_average(50)
-fft_method(calc_moving_average(10))
-fft_method(calc_moving_average(20))
-fft_method(calc_moving_average(30))
-fft_method(calc_moving_average(40))
+# plot_moving_average(50)
+# fft_method(calc_moving_average(1))
+# fft_method(calc_moving_average(10))
+# fft_method(calc_moving_average(100))
 
 
 
