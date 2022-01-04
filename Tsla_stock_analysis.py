@@ -28,7 +28,20 @@ moving_average50pt = []
 
 
 ################## helper methods ##################
-def make_trendline(time, stock):
+def calc_trendline(time, stock):
+    global tesla, t, counter
+    trendline = np.polyfit(time, stock, 1)
+    m = trendline[0]
+    c = trendline[1]
+    y = []
+    
+    for i in range(len(t)):
+        # y = m*t + c
+        y.append(m*i + c)
+
+    return y
+
+def plot_trendline(time, stock):
     global tesla, t, counter
     trendline = np.polyfit(time, stock, 1)
     m = trendline[0]
@@ -149,8 +162,12 @@ def fft_method(data):
 
 def correlation():
     global tesla, t, counter
+    trendline = calc_trendline(t, tesla)
     # correlate using np.corrcoef(np_array1, np_array2)
-    return
+
+    corr = np.corrcoef(trendline, tesla)[0,1]
+    print("\n" + str(corr) + "\n")
+    return corr
 
 def support():
     global tesla, t, counter
@@ -161,7 +178,7 @@ def support():
 
 
 ################## plots ##################
-trendline = make_trendline(t, tesla)
+trendline = plot_trendline(t, tesla)
 # kite_LPF()
 plot_moving_average(10)
 plot_moving_average(20)
@@ -172,6 +189,8 @@ plot_moving_average(50)
 # fft_method(calc_moving_average(1))
 # fft_method(calc_moving_average(10))
 # fft_method(calc_moving_average(100))
+
+correlation()
 
 
 
