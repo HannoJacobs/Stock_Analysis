@@ -192,11 +192,11 @@ def support():
 
 ################## plots ##################
 trendline = make_trendline(t, tesla)
-kite_LPF()
+# kite_LPF()
 moving_average(10)
 moving_average(20)
 moving_average(30)
-moving_average(50)
+# moving_average(50)
 
 
 # N = 1000
