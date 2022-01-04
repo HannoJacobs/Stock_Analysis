@@ -15,6 +15,14 @@ for i in tesla_file:
     counter += 1
     tesla.append(np.float(i[:-1]))
 tesla_file.close()
+
+moving_average10pt = []
+moving_average20pt = []
+moving_average30pt = []
+moving_average40pt = []
+moving_average50pt = []
+
+
 ################## end setup ##################
 
 
@@ -140,7 +148,7 @@ def kite_LPF():
     
     return kite_LPF_array
 
-def moving_average(gaps):
+def plot_moving_average(gaps):
     global tesla, t, counter
     tesla_array = np.array(tesla)
 
@@ -160,6 +168,7 @@ def moving_average(gaps):
     #     causal = "non-causal"
     #     avg_array.append(0)
 
+
     text = "{num:d} point {txt} moving average"
     plt.plot(t, avg_array, label=text.format(num = gaps, txt = causal))
     plt.legend()
@@ -168,10 +177,40 @@ def moving_average(gaps):
     return
 
 
-
-def fft_method():
+def calc_moving_average(gaps):
     global tesla, t, counter
+    tesla_array = np.array(tesla)
+
+    avg_array = []
+    for i in range(gaps):#causal
+        causal = "causal"
+        avg_array.append(0)
+
+    for i in range(gaps, counter):
+        index1 = i-gaps
+        index2 = i
+
+        avg = ( np.sum(tesla_array[index1:index2]) )/gaps
+        avg_array.append(avg)
+    
+
+    return avg_array
+
+
+
+def fft_method(data):
+    global tesla, t, counter
+    from scipy.fft import fft, fftfreq
     fft_array = []
+    y = fft(data)
+    yf = np.abs(y)
+    N = counter
+    T = 1
+    xf = fftfreq(N, T)[:N//2]
+    plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]), label="FFT Method")
+
+    plt.legend()
+    plt.grid()
 
 
     return fft_array
@@ -191,12 +230,17 @@ def support():
 
 
 ################## plots ##################
-trendline = make_trendline(t, tesla)
-# kite_LPF()
-moving_average(10)
-moving_average(20)
-moving_average(30)
-# moving_average(50)
+# trendline = make_trendline(t, tesla)
+# # kite_LPF()
+# plot_moving_average(10)
+# plot_moving_average(20)
+# plot_moving_average(30)
+# # plot_moving_average(50)
+fft_method(calc_moving_average(10))
+fft_method(calc_moving_average(20))
+fft_method(calc_moving_average(30))
+fft_method(calc_moving_average(40))
+
 
 
 # N = 1000
