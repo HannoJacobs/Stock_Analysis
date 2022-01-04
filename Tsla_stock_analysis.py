@@ -49,71 +49,6 @@ def make_trendline(time, stock):
 
     return y
 
-def G4G_filter():
-    global tesla, t, counter
-    LPF_array = []
-
-    f_sample = 40000 # sampling frequency
-    f_pass = 4000  # pass band frequency
-    f_stop = 8000  # stop band frequency
-    fs = 0.5
-    wp = f_pass/(f_sample/2)  # pass band freq in radian
-    ws = f_stop/(f_sample/2) # stop band freq in radian
-    Td = 1  # Sampling Time
-    g_pass = 0.5 # pass band ripple
-    g_stop = 40 # stop band attenuation
-
-    omega_p = (2/Td)*np.tan(wp/2)
-    omega_s = (2/Td)*np.tan(ws/2)
-    N, Wn = signal.buttord(omega_p, omega_s, g_pass, g_stop, analog=True) # Design of Filter using signal.buttord function
-    
-    print("Order of the Filter=", N)  # N is the order
-    print("Cut-off frequency= {:.3f} rad/s ".format(Wn)) # Wn is the cut-off freq of the filter
-    
-    ###### Conversion in Z-domain ######
-    b, a = signal.butter(N, Wn, 'low', True) # b is the numerator of the filter & a is the denominator
-    z, p = signal.bilinear(b, a, fs)
-    w, h = signal.freqz(z, p, 512) # w is the freq in z-domain & h is the magnitude in z-domain
-
-    plt.semilogx(w, 20*np.log10(abs(h)))
-    plt.xscale('log')
-    plt.title('Butterworth filter frequency response')
-    plt.xlabel('Frequency [Hz]')
-    plt.ylabel('Amplitude [dB]')
-    plt.margins(0, 0.1)
-    plt.grid(which='both', axis='both')
-    plt.axvline(100, color='green')
-    plt.show()
-
-    # Impulse Response
-    imp = signal.unit_impulse(40)
-    c, d = signal.butter(N, 0.5)
-    response = signal.lfilter(c, d, imp)
-    
-    plt.stem(np.arange(0, 40), imp, use_line_collection=True)
-    plt.stem(np.arange(0, 40), response, use_line_collection=True)
-    plt.margins(0, 0.1)
-    
-    plt.xlabel('Time [samples]')
-    plt.ylabel('Amplitude')
-    plt.grid(True)
-    plt.show()
-
-    fig, ax1 = plt.subplots()
-    ax1.set_title('Digital filter frequency response')
-    ax1.set_ylabel('Angle(radians)', color='g')
-    ax1.set_xlabel('Frequency [Hz]')
-    angles = np.unwrap(np.angle(h))
-    ax1.plot(w/2*np.pi, angles, 'g')
-    ax1.grid()
-    ax1.axis('tight')
-    plt.show()
-
-
-
-
-    return LPF_array
-
 def kite_LPF():
     global tesla, t, counter
     kite_LPF_array = []
@@ -176,7 +111,6 @@ def plot_moving_average(gaps):
 
     return
 
-
 def calc_moving_average(gaps):
     global tesla, t, counter
     tesla_array = np.array(tesla)
@@ -196,13 +130,11 @@ def calc_moving_average(gaps):
 
     return avg_array
 
-
-
 def fft_method(data):
     global tesla, t, counter
     
-    freq = 1000
-    N_fft = counter*5
+    freq = counter
+    N_fft = counter*1
     f_1 = np.arange(0, freq, freq/N_fft)
     Y_r = np.fft.fft(data, N_fft)/N_fft # was like this
     Y_shifted = np.fft.fftshift(Y_r)
@@ -214,7 +146,6 @@ def fft_method(data):
     plt.grid()
 
     return Y_r_mag
-
 
 def correlation():
     global tesla, t, counter
@@ -230,28 +161,20 @@ def support():
 
 
 ################## plots ##################
-# trendline = make_trendline(t, tesla)
-# # kite_LPF()
-# plot_moving_average(10)
-# plot_moving_average(20)
-# plot_moving_average(30)
-# plot_moving_average(50)
+trendline = make_trendline(t, tesla)
+# kite_LPF()
+plot_moving_average(10)
+plot_moving_average(20)
+plot_moving_average(30)
+plot_moving_average(50)
+
+
 # fft_method(calc_moving_average(1))
 # fft_method(calc_moving_average(10))
 # fft_method(calc_moving_average(100))
 
 
 
-# N = 1000
-# # T = 1/800
-# yf = fft(tesla)
-# xf = fftfreq(N, T)[:N//2]
-
-# plt.plot()
-
 
 
 plt.show()
-
-
-
