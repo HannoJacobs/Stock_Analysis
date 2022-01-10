@@ -7,14 +7,25 @@ from scipy.fft import fft, ifft
 
 
 tesla_file = open("tesla_share_price.txt", "r")
-tesla = []
+rough_tesla_array = []
 t = []
 counter = 0
+num_data_points = 0
 for i in tesla_file:
+    rough_tesla_array.append(np.float(i[:-1]))
+    num_data_points += 1
+tesla_file.close()
+
+substring = 1 # change this to take the last x part of 2 years
+number_of_points = round(num_data_points/substring)
+start = num_data_points - number_of_points
+end = num_data_points
+tesla = []
+for i in range(start, end):
     t.append(counter)
     counter += 1
-    tesla.append(np.float(i[:-1]))
-tesla_file.close()
+    tesla.append(rough_tesla_array[i])
+
 
 moving_average10pt = []
 moving_average20pt = []
