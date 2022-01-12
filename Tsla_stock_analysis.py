@@ -69,7 +69,13 @@ def plot_trendline(time, stock):
     plt.xlabel('Days')
 
     # trendline = make_trendline(t, tesla)
-    plt.plot(t, y, linewidth=0.5, label='First order linear trendline')
+    # 1.8usd per day
+    # therefore 
+    trendline_val = str( round(m*(counter/2)) )
+
+    text = "1st order linear trendline: increase of ${txt}/year"
+    
+    plt.plot(t, y, linewidth=0.5, label=text.format(txt = trendline_val))
 
     return y
 
