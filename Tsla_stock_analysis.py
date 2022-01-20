@@ -16,7 +16,7 @@ for i in tesla_file:
     num_data_points += 1
 tesla_file.close()
 
-substring = 1.0 # change this to take the last x part of 2 years
+substring = 1 # change this to take the last x part of 2 years
 number_of_points = round(num_data_points/substring)
 start = num_data_points - number_of_points
 end = num_data_points
@@ -72,7 +72,7 @@ def plot_trendline(time, stock):
     # 1.8usd per day
     # therefore 
     trendline_val = str( round(m*(counter/2)) )
-    text = "1st order linear trendline: increase of ${txt}/year"
+    text = "1st order linear trendline: increase of ${txt}/2years"
     plt.plot(t, y, linewidth=0.5, label=text.format(txt = trendline_val))
 
     return y
@@ -112,8 +112,9 @@ def kite_LPF():
     return kite_LPF_array
 
 def plot_moving_average(gaps):
-    global tesla, t, counter
+    global tesla, t, counter, substring
     tesla_array = np.array(tesla)
+    gaps = round(gaps/substring)
 
     avg_array = []
     for i in range(gaps):#causal
