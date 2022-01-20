@@ -16,7 +16,7 @@ for i in tesla_file:
     num_data_points += 1
 tesla_file.close()
 
-substring = 1 # change this to take the last x part of 2 years
+substring = 1.0 # change this to take the last x part of 2 years
 number_of_points = round(num_data_points/substring)
 start = num_data_points - number_of_points
 end = num_data_points
@@ -195,10 +195,14 @@ def support():
 ################## plots ##################
 trendline = plot_trendline(t, tesla)
 # kite_LPF()
-plot_moving_average(10)
-plot_moving_average(20)
+# plot_moving_average(10)
+# plot_moving_average(20)
 plot_moving_average(30)
+plot_moving_average(40)
 plot_moving_average(50)
+# plot_moving_average(60)
+# plot_moving_average(70)
+# plot_moving_average(100)
 
 
 # fft_method(calc_moving_average(1))
