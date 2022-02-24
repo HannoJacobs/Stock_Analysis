@@ -199,11 +199,11 @@ trendline = plot_trendline(t, tesla)
 # plot_moving_average(10)
 # plot_moving_average(20)
 plot_moving_average(30)
-plot_moving_average(40)
+# plot_moving_average(40)
 plot_moving_average(50)
 # plot_moving_average(60)
 # plot_moving_average(70)
-# plot_moving_average(100)
+plot_moving_average(100)
 
 
 # fft_method(calc_moving_average(1))
