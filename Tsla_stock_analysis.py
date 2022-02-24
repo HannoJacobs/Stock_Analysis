@@ -206,6 +206,7 @@ plot_moving_average(50)
 plot_moving_average(100)
 
 
+
 # fft_method(calc_moving_average(1))
 # fft_method(calc_moving_average(10))
 # fft_method(calc_moving_average(100))
